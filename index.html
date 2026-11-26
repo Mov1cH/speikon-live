@@ -1,9 +1,23 @@
 <!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<meta http-equiv="refresh" content="0; url=https://worthy-choices-clubs-finished.trycloudflare.com">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Speikon">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
 <title>Speikon Studio</title>
-<script>location.replace("https://worthy-choices-clubs-finished.trycloudflare.com");</script>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#bdb7ad;color:#1b1a18;font:500 17px Futura,"Avenir Next",sans-serif;text-align:center;padding:24px}a{color:inherit}</style>
-</head><body><p>Ouverture de la galerie…<br><a href="https://worthy-choices-clubs-finished.trycloudflare.com">Toucher ici si rien ne se passe</a></p></body></html>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#bdb7ad;color:#1b1a18;font:500 17px Futura,"Avenir Next",sans-serif;text-align:center;padding:24px}a{color:inherit}img{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 20px rgba(0,0,0,.2)}#install{display:none}</style>
+</head><body>
+<div id="go"><p>Ouverture…<br><a href="https://added-restored-saver-life.trycloudflare.com">Toucher ici si rien ne se passe</a></p></div>
+<div id="install"><img src="icon-180.png" alt=""><p><b>Speikon Studio</b></p><p>Touchez <b>Partager</b> puis<br><b>« Sur l'écran d'accueil »</b>.</p></div>
+<script>
+var standalone = navigator.standalone || matchMedia("(display-mode: standalone)").matches;
+if (location.hash === "#installer" && !standalone) {
+  document.getElementById("go").style.display = "none";
+  document.getElementById("install").style.display = "block";
+} else {
+  location.replace("https://added-restored-saver-life.trycloudflare.com");
+}
+</script>
+</body></html>
