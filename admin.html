@@ -2,22 +2,42 @@
 <html lang="fr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
+<meta http-equiv="Cache-Control" content="no-cache">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Speikon">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
 <title>Speikon Studio · gestion</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#bdb7ad;color:#1b1a18;font:500 17px Futura,"Avenir Next",sans-serif;text-align:center;padding:24px}a{color:inherit}img{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 20px rgba(0,0,0,.2)}#install{display:none}</style>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#bdb7ad;color:#1b1a18;font:500 17px Futura,"Avenir Next",sans-serif;text-align:center;padding:24px}img{width:96px;height:96px;border-radius:22px;box-shadow:0 8px 20px rgba(0,0,0,.2)}#install{display:none}small{display:block;margin-top:8px;opacity:.65;font-size:14px}</style>
 </head><body>
-<div id="go"><p>Ouverture…<br><a href="https://added-restored-saver-life.trycloudflare.com/admin">Toucher ici si rien ne se passe</a></p></div>
+<div id="go"><img src="icon-180.png" alt=""><p id="msg">Ouverture de la galerie…</p></div>
 <div id="install"><img src="icon-180.png" alt=""><p><b>Speikon Studio · gestion</b></p><p>Touchez <b>Partager</b> puis<br><b>« Sur l'écran d'accueil »</b>.</p></div>
 <script>
+var PATH = "/admin";
+var EN = !(navigator.language || "fr").toLowerCase().startsWith("fr");
 var standalone = navigator.standalone || matchMedia("(display-mode: standalone)").matches;
+var start = Date.now();
+function say(fr, en, sub) {
+  document.getElementById("msg").innerHTML = (EN ? en : fr) + (sub ? "<small>" + sub + "</small>" : "");
+}
+function timeout(ms) { return new Promise(function (_, no) { setTimeout(no, ms); }); }
+async function attempt() {
+  try {
+    var t = await (await fetch("target.json?" + Date.now(), { cache: "no-store" })).json();
+    var ok = await Promise.race([fetch(t.url + "/api/ping?" + Date.now(), { cache: "no-store" }), timeout(5000)]);
+    if (ok && ok.ok) { location.replace(t.url + PATH); return; }
+  } catch (e) {}
+  var waited = (Date.now() - start) / 1000;
+  if (waited > 90) say("La galerie n'est pas ouverte pour le moment.", "The gallery isn't open right now.",
+                       EN ? "This page will open it as soon as it is." : "Cette page l'ouvrira dès qu'elle le sera.");
+  else say("La galerie démarre, un instant…", "The gallery is starting, one moment…");
+  setTimeout(attempt, 3000);
+}
 if (location.hash === "#installer" && !standalone) {
   document.getElementById("go").style.display = "none";
   document.getElementById("install").style.display = "block";
 } else {
-  location.replace("https://added-restored-saver-life.trycloudflare.com/admin");
+  attempt();
 }
 </script>
 </body></html>
